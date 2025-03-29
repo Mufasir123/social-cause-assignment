@@ -13,9 +13,15 @@ const userModel = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    yourPassion:{
+        type: String,
+        required: true,
+        enum: ['Climate Action', 'Gender Equality', 'Education', 'Poverty','other'],
+        default: 'other'
     }
 })
 
-const UserModel = mongoose.model("User", userModel);
+const UserModel =mongoose.models.User || mongoose.model("User", userModel);
 
 export default UserModel;
