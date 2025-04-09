@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { MdSlowMotionVideo } from "react-icons/md";
+import { MdSlowMotionVideo, MdArticle } from "react-icons/md";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { FaBook } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -8,34 +8,32 @@ import ContentVideos from "@/components/ContentVideos";
 import ContentTEDTalks from "@/components/ContentTEDTalks";
 import ContentBooks from "@/components/ContentBooks";
 import ContentArticles from "@/components/ContentArticles";
-import { MdArticle } from "react-icons/md";
 
 const ContentLibrary = () => {
   const [activePage, setActivePage] = useState("videos");
 
+  const menuItems = [
+    { name: "videos", icon: <MdSlowMotionVideo size={24} />, label: "Videos" },
+    { name: "ted-talks", icon: <RiKakaoTalkFill size={24} />, label: "TED Talks" },
+    { name: "books", icon: <FaBook size={24} />, label: "Books" },
+    { name: "articles", icon: <MdArticle size={24} />, label: "Articles" },
+  ];
+
   return (
-    <div className="bg-black text-white min-h-screen flex">
-      {/* Sidebar Navigation */}
+    <div className="bg-black text-white min-h-screen flex flex-col md:flex-row overflow-x-hidden">
+      {/* Sidebar for Desktop */}
       <motion.nav
-        className="flex flex-col gap-4 p-4 rounded-br-2xl rounded-tr-2xl fixed left-0 top-[30%] transition-all duration-500 border-t-2 border-r-4 border-b-2 bg-gray-900 w-20 hover:w-52 group"
+        className="hidden md:flex flex-col gap-4 p-4 fixed left-0 top-1/4 bg-gray-900 rounded-r-2xl border-t-2 border-r-4 border-b-2 w-20 hover:w-48 group z-10 transition-all duration-300"
       >
-        {[
-          { name: "videos", icon: <MdSlowMotionVideo size={24} />, label: "Videos" },
-          { name: "ted-talks", icon: <RiKakaoTalkFill size={24} />, label: "TED Talks" },
-          { name: "books", icon: <FaBook size={24} />, label: "Books" },
-          { name: "articles", icon: <MdArticle size={24} />, label: "Articles" },
-        ].map((item) => (
+        {menuItems.map((item) => (
           <button
             key={item.name}
-            className={`flex items-center px-2 py-2 rounded-3xl gap-2 cursor-pointer transition-all duration-300 hover:bg-[#f3f4f65f] w-full ${
+            className={`flex items-center px-2 py-2 rounded-3xl gap-2 transition-all duration-300 hover:bg-[#f3f4f65f] w-full ${
               activePage === item.name ? "bg-[#31666b5f]" : ""
             }`}
             onClick={() => setActivePage(item.name)}
           >
-            {/* Icons should always be visible */}
             <span className="text-white flex-shrink-0">{item.icon}</span>
-
-            {/* Text should appear only on hover */}
             <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 ml-4 whitespace-nowrap">
               {item.label}
             </span>
@@ -43,8 +41,24 @@ const ContentLibrary = () => {
         ))}
       </motion.nav>
 
-      {/* Content Display */}
-      <div className="p-4 ml-[4rem] lg:ml-[10rem] w-full">
+      {/* Bottom Nav for Mobile */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 flex justify-around py-2 z-10 max-w-full">
+        {menuItems.map((item) => (
+          <button
+            key={item.name}
+            onClick={() => setActivePage(item.name)}
+            className={`flex flex-col items-center text-xs ${
+              activePage === item.name ? "text-[#00ffd5]" : "text-white"
+            }`}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </button>
+        ))}
+      </nav>
+
+      {/* Content */}
+      <div className="flex-1 p-4 md:ml-24 mb-16 md:mb-0 max-w-full overflow-x-hidden">
         {activePage === "videos" && <ContentVideos />}
         {activePage === "ted-talks" && <ContentTEDTalks />}
         {activePage === "books" && <ContentBooks />}
