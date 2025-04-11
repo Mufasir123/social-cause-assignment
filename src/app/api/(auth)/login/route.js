@@ -26,7 +26,7 @@ export async function POST(request) {
             path: '/',
         });
 
-        return NextResponse.json({message: "Logged in successfully",token, user},{status:200});
+        return NextResponse.json({message: "Logged in successfully",token, user, success:true},{status:200});
     } catch (error) {
         console.log("Error is coming from server: " + error.message);
         return NextResponse.json({message: "Server Error"},{status:500})

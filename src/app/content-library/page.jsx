@@ -42,12 +42,12 @@ const ContentLibrary = () => {
       </motion.nav>
 
       {/* Bottom Nav for Mobile */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 flex justify-around py-2 z-10 max-w-full">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-700 flex justify-around py-2 z-10 max-w-full ">
         {menuItems.map((item) => (
           <button
             key={item.name}
             onClick={() => setActivePage(item.name)}
-            className={`flex flex-col items-center text-xs ${
+            className={`flex flex-col items-center text-xs cursor-pointer ${
               activePage === item.name ? "text-[#00ffd5]" : "text-white"
             }`}
           >

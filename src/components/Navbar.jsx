@@ -1,16 +1,23 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Register from "./Register";
 import Link from "next/link";
+import Profile from "./Profile";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import Register from "@/components/Register";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = () => {
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const user = useSelector((state) => state.user?.user);
 
   // Auto close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
+      event.preventDefault();
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setMenuOpen(false);
       }
@@ -27,11 +34,14 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
+  const name = user?.name?.trim()?.slice(0, 2)?.toUpperCase();
   return (
     <nav
       className="relative z-50 bg-black text-[#E0E0EF] px-4 py-3"
       ref={menuRef}
     >
+      <Profile isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/">
           <img src="/logo.svg" alt="Logo" className="h-10" />
@@ -50,40 +60,65 @@ const Navbar = () => {
             xmlns="http://www.w3.org/2000/svg"
           >
             {menuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path d="M6 18L18 6M6 6l12 12" strokeWidth="2" />
             ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path d="M4 6h16M4 12h16M4 18h16" strokeWidth="2" />
             )}
           </svg>
         </button>
 
         {/* Desktop menu */}
         <ul className="hidden md:flex gap-4 items-center list-none">
-          <NavLink href="/" label="Home" />
-          <NavLink href="/content-library" label="Content Library" />
-          <NavLink href="/passion" label="Passion Discovery" />
-          <NavLink href="/community-chat" label="Community Chat" />
-          <NavLink href="/map" label="Interactive Map" />
+          <NavLink
+            href="/"
+            label="Home"
+            user={user}
+            setLoginModal={setIsModelOpen}
+          />
+          <NavLink
+            href="/content-library"
+            label="Content Library"
+            user={user}
+            setLoginModal={setIsModelOpen}
+          />
+          <NavLink
+            href="/passion"
+            label="Passion Discovery"
+            user={user}
+            setLoginModal={setIsModelOpen}
+          />
+          <NavLink
+            href="/chats"
+            label="Community Chat"
+            user={user}
+            setLoginModal={setIsModelOpen}
+          />
+          <NavLink
+            href="/map"
+            label="Interactive Map"
+            user={user}
+            setLoginModal={setIsModelOpen}
+          />
         </ul>
 
-        {/* Desktop login/register */}
-        <div className="hidden md:block">
-          <button
-            className="bg-[#44448E] text-white px-4 py-2 rounded-3xl"
-            onClick={() => setIsModelOpen(true)}
-          >
-            Login/Register
-          </button>
+        {/* Desktop buttons */}
+        <div className="hidden md:flex gap-4 items-center">
+          {!user ? (
+            <Register />
+          ) : (
+            <button
+              className="rounded-3xl"
+              onClick={() => setIsProfileOpen(true)}
+            >
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>{name?.name}</AvatarFallback>
+              </Avatar>
+            </button>
+          )}
         </div>
       </div>
 
@@ -100,66 +135,105 @@ const Navbar = () => {
             href="/"
             label="Home"
             mobile
+            user={user}
+            setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
           <NavLink
             href="/content-library"
             label="Content Library"
             mobile
+            user={user}
+            setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
           <NavLink
             href="/passion"
             label="Passion Discovery"
             mobile
+            user={user}
+            setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
           <NavLink
             href="/chats"
             label="Community Chat"
             mobile
+            user={user}
+            setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
           <NavLink
             href="/map"
             label="Interactive Map"
             mobile
+            user={user}
+            setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
           <li>
-            <button
-              className="bg-[#44448E] text-white px-4 py-2 rounded-3xl w-full"
-              onClick={() => {
-                setIsModelOpen(true);
-                setMenuOpen(false);
-              }}
-            >
-              Login/Register
-            </button>
+            {!user ? (
+              <Register></Register>
+            ) : (
+              <button
+                className="rounded-3xl"
+                onClick={() => setIsProfileOpen(true)}
+              >
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>{name?.name}</AvatarFallback>
+                </Avatar>
+              </button>
+            )}
           </li>
         </ul>
       </div>
 
       {/* Modal */}
-      <Register isOpen={isModelOpen} onClose={() => setIsModelOpen(false)} />
     </nav>
   );
 };
 
-const NavLink = ({ href, label, mobile = false, onClick }) => (
-  <li>
-    <Link
-      href={href}
-      onClick={onClick}
-      className={`block px-4 py-2 rounded-2xl text-white text-sm transition duration-200 ${
-        mobile
-          ? "hover:bg-[#44448E]"
-          : "hover:bg-[#6868AC] md:w-auto md:h-10 md:flex md:justify-center md:items-center"
-      }`}
-    >
-      {label}
-    </Link>
-  </li>
-);
+const NavLink = ({
+  href,
+  label,
+  mobile = false,
+  user,
+  setLoginModal,
+  onClick,
+}) => {
+  const router = useRouter();
+
+  // Define which routes are protected
+  const protectedRoutes = ["/content-library", "/passion", "/chats", "/map"];
+
+  const handleNavigation = (e) => {
+    if (protectedRoutes.includes(href) && !user) {
+      e.preventDefault();
+      setLoginModal(true); // Open login modal
+    } else {
+      if (onClick) onClick(); // For closing mobile menu
+    }
+  };
+
+  return (
+    <li>
+      <Link
+        href={href}
+        onClick={handleNavigation}
+        className={`block px-4 py-2 rounded-2xl text-white text-sm transition duration-200 ${
+          mobile
+            ? "hover:bg-[#44448E]"
+            : "hover:bg-[#6868AC] md:w-auto md:h-10 md:flex md:justify-center md:items-center"
+        }`}
+      >
+        {label}
+      </Link>
+    </li>
+  );
+};
 
 export default Navbar;

@@ -13,12 +13,6 @@ const userModel = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    yourPassion:{
-        type: String,
-        required: true,
-        enum: ['Climate Action', 'Gender Equality', 'Education', 'Poverty','other'],
-        default: 'other'
     }
 })
 
