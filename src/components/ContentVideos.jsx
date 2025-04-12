@@ -111,9 +111,6 @@ const ContentVideos = () => {
                   <p className="text-gray-400 text-xs mt-1">
                     Credits: {data.credit}
                   </p>
-                  <p className="text-gray-400 text-xs">
-                    Speaker: {data.speaker}
-                  </p>
                   {/* <a
                 href={data.url}
                 target="_blank"

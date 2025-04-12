@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
@@ -22,6 +29,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    yourPassion: "",
   });
 
   const handleInputChange = (e) => {
@@ -34,7 +42,11 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!data.email || !data.password || (!login && !data.name)) {
+    if (
+      !data.email ||
+      !data.password ||
+      (!login && (!data.name || !data.yourPassion))
+    ) {
       toast.error("Please fill all required fields");
       return;
     }
@@ -55,14 +67,21 @@ function Register() {
       toast.error("Invalid Credentials");
     } finally {
       setLoading(false);
-      setData({ name: "", email: "", password: "" });
+      setData({
+        name: "",
+        email: "",
+        password: "",
+        yourPassion: "",
+      });
     }
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button  className='bg-black text-white hover:bg-white hover:text-black duration-300 transition-all border cursor-pointer '>Sign in</Button>
+        <Button className="bg-black text-white hover:bg-white hover:text-black duration-300 transition-all border cursor-pointer ">
+          Sign in
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <div className="flex flex-col items-center gap-2">
@@ -70,14 +89,25 @@ function Register() {
             className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border"
             aria-hidden="true"
           >
-            <svg className="stroke-zinc-800 dark:stroke-zinc-100 cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
+            <svg
+              className="stroke-zinc-800 dark:stroke-zinc-100 cursor-pointer"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 32 32"
+              aria-hidden="true"
+            >
               <circle cx="16" cy="16" r="12" fill="none" strokeWidth="8" />
             </svg>
           </div>
           <DialogHeader>
-            <DialogTitle className="sm:text-center">{login ? "Welcome back" : "Create an account"}</DialogTitle>
+            <DialogTitle className="sm:text-center">
+              {login ? "Welcome back" : "Create an account"}
+            </DialogTitle>
             <DialogDescription className="sm:text-center">
-              {login ? "Enter your credentials to login to your account." : "Sign up to get started."}
+              {login
+                ? "Enter your credentials to login to your account."
+                : "Sign up to get started."}
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -123,8 +153,41 @@ function Register() {
             />
           </div>
 
-          <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
-            {loading ? (login ? "Signing in..." : "Registering...") : login ? "Sign in" : "Register"}
+          {!login && (
+            <div className="space-y-2">
+              <Label htmlFor="passion">Your Passion</Label>
+              <select
+                id="passion"
+                name="yourPassion"
+                value={data.yourPassion}
+                onChange={handleInputChange}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+                required
+              >
+                <option value="">Select your passion</option>
+                <option value="poverty">Poverty</option>
+                <option value="education">Education</option>
+                <option value="health">Health</option>
+                <option value="environment">Environment</option>
+                <option value="humanRights">Human Rights</option>
+                <option value="articles writing">Articles Writing</option>
+                <option value="content creator">Content Creator</option>
+              </select>
+            </div>
+          )}
+
+          <Button
+            type="submit"
+            className="w-full cursor-pointer"
+            disabled={loading}
+          >
+            {loading
+              ? login
+                ? "Signing in..."
+                : "Registering..."
+              : login
+              ? "Sign in"
+              : "Register"}
           </Button>
         </form>
 

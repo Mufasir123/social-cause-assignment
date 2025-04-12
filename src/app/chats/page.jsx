@@ -1,11 +1,12 @@
 'use client'
-// import ChatBox from "@/components/ChatBox"
+import ChatSidebar from "@/components/ChatSidebar"
 
 const ChatApp = () => {
   
+  
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      {/* <ChatBox /> */}
+    <div className="min-h-screen flex justify-center items-center bg-black">
+      <ChatSidebar/>
     </div>
   )
 }

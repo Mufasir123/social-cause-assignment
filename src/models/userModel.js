@@ -13,7 +13,11 @@ const userModel = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    yourPassion: {
+        type: String,
+        enum: [ 'poverty', 'education', 'health', 'environment', 'humanRights','articles writing','content creator'],
+    },
 })
 
 const UserModel =mongoose.models.User || mongoose.model("User", userModel);
