@@ -140,7 +140,7 @@ function HeroGeometric({
 
                     <motion.div custom={1} variants={fadeUpVariants} initial="hidden" animate="visible">
                         <h1
-                            className="text-4xl sm:text-6xl md:text-8xl font-bold mb-6 md:mb-8 tracking-tight">
+                            className="text-4xl lg:text-4xl md:text-4xl font-bold mb-6 md:mb-8 tracking-tight">
                             <span
                                 className="bg-clip-text text-transparent bg-gradient-to-b from-white to-white/80">
                                 {title1}
@@ -157,9 +157,8 @@ function HeroGeometric({
 
                     <motion.div custom={2} variants={fadeUpVariants} initial="hidden" animate="visible">
                         <p
-                            className="text-base sm:text-lg md:text-xl text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-                            Crafting exceptional digital experiences through
-                            innovative design and cutting-edge technology.
+                            className="text-base  text-white/40 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
+                            Step into a world where your interests become your influence. Whether you're driven by education, equality, climate, or creativity — this is your space to explore, connect with like-minded changemakers across the globe, and take meaningful action. Find your cause, join the movement, and be the spark that shapes a better tomorrow.
                         </p>
                     </motion.div>
                 </div>

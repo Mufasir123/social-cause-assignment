@@ -2,9 +2,9 @@ import { HeroGeometric } from "@/components/ui/shape-landing-hero"
 
 
 function Hero() {
-    return <HeroGeometric badge="Social Cause"
-            title1 = "Select You Passion"
-            title2 = "Connect" />
+    return <HeroGeometric badge="Social Causes"
+            title1 = "Unleash your passion. Connect globally"
+            title2 = "Impact endlessly."/>
 }
 
 export default Hero

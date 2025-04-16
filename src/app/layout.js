@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
       <body
         className={`bg-[#E0E0EF] ${roboto.className}  ${poppins.variable} ${geistMono.variable} antialiased`}
       >
+        
         <CustomProvider>
         <ToastContainer/>
         <Navbar/>

@@ -10,13 +10,13 @@ import ContentBooks from "@/components/ContentBooks";
 import ContentArticles from "@/components/ContentArticles";
 
 const ContentLibrary = () => {
-  const [activePage, setActivePage] = useState("videos");
+  const [activePage, setActivePage] = useState("articles");
 
   const menuItems = [
+    { name: "articles", icon: <MdArticle size={24} />, label: "Articles" },
     { name: "videos", icon: <MdSlowMotionVideo size={24} />, label: "Videos" },
     { name: "ted-talks", icon: <RiKakaoTalkFill size={24} />, label: "TED Talks" },
     { name: "books", icon: <FaBook size={24} />, label: "Books" },
-    { name: "articles", icon: <MdArticle size={24} />, label: "Articles" },
   ];
 
   return (
@@ -59,10 +59,10 @@ const ContentLibrary = () => {
 
       {/* Content */}
       <div className="flex-1 p-4 md:ml-24 mb-16 md:mb-0 max-w-full overflow-x-hidden">
+        {activePage === "articles" && <ContentArticles />}
         {activePage === "videos" && <ContentVideos />}
         {activePage === "ted-talks" && <ContentTEDTalks />}
         {activePage === "books" && <ContentBooks />}
-        {activePage === "articles" && <ContentArticles />}
       </div>
     </div>
   );

@@ -1,19 +1,24 @@
 "use client";
+import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-const ContentBooks = () => {
+const ContentArticle = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const allContent = useSelector((state) => state.content.content);
+
+
   console.log("articles data from Redux:", allContent);
 
   const categories = [
     "All",
     ...new Set(allContent.map((item) => item.yourPassion)),
   ];
+  console.log("categories:", categories);
+  console.log("selectedCategory:", selectedCategory);
 
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
 
   // Filter content by selected category
   const filteredContent =
@@ -25,10 +30,10 @@ const ContentBooks = () => {
   const articles = filteredContent.flatMap((item) => item.articles || []);
 
   // Search filter
-  const searchedarticles = articles.filter((book) => {
+  const searchedarticles = articles.filter((article) => {
     return (
-      book.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author?.toLowerCase().includes(searchTerm.toLowerCase())
+      article.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.author?.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -65,11 +70,13 @@ const ContentBooks = () => {
               key={index}
               className="bg-black border border-[#f4eeee48] p-0.5 shadow-[#5d4941da] rounded-lg shadow-lg"
             >
-              <img
-                src={article.url}
-                alt=""
-                className="w-full h-80 rounded-t-lg shadow-xl shadow-[#9464647e] hover:scale-90 transition-all duration-300 lazyload"
-              />
+              {article.url && (
+      <img
+        src={article.url}
+        alt=""
+        className="w-full h-80 rounded-t-lg shadow-xl shadow-[#9464647e] hover:scale-90 transition-all duration-300 lazyload"
+      />
+    )}
               <h3 className="ml-3 text-md font-semibold text-white mb-3 mt-3">
                 {article.title || "Untitled"}
               </h3>
@@ -98,15 +105,17 @@ const ContentBooks = () => {
                 </button>
               )}
               <br />
-              {article.articleUrl && (
-                <a
-                  href={article.articleUrl}
-                  target="_blank"
+              {/* {article.articleUrl && ( */}
+                <Link
+                  // href={article.articleUrl}
+                  href={`content-library/article/${index}`}
+                  // target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-400  inline-block cursor-pointer ml-3 mb-3 hover:scale-110 transition-all duration-300"
                 >
                   Know More
-                </a>
-              )}
+                </Link>
+              {/* )} */}
             </div>
           ))
         )}
@@ -115,4 +124,4 @@ const ContentBooks = () => {
   );
 };
 
-export default ContentBooks;
+export default ContentArticle;

@@ -9,7 +9,7 @@ const TEDTalkSchema = new mongoose.Schema({
   credit: String,
   speaker: String,
   publicId: String // Optional: for Cloudinary if used
-}, { _id: false })
+},{ _id: true })
 
 // 🎥 Video Subschema
 const VideoSchema = new mongoose.Schema({
@@ -20,7 +20,7 @@ const VideoSchema = new mongoose.Schema({
   videoUrl: { type: String},
   publicId: String,
   type: String
-}, { _id: false })
+},{ _id: true })
 
 // 📚 Book Subschema
 const BookSchema = new mongoose.Schema({
@@ -31,7 +31,7 @@ const BookSchema = new mongoose.Schema({
   bookUrl: { type: String},
   url: { type: String },
   publicId: String // In case you store file previews or covers
-}, { _id: false })
+},{ _id: true })
 
 // 📰 Article Subschema
 const ArticleSchema = new mongoose.Schema({
@@ -41,7 +41,7 @@ const ArticleSchema = new mongoose.Schema({
   articleUrl: { type: String},
   url: { type: String},
   publicId: String
-}, { _id: false })
+},{ _id: true })
 
 // 📦 Main Content Schema
 const ContentSchema = new mongoose.Schema({
@@ -58,5 +58,4 @@ const ContentSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 const ContentModel = mongoose.models.ContentModel || mongoose.model("ContentModel", ContentSchema)
-
 export default ContentModel

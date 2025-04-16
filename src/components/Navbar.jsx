@@ -37,14 +37,14 @@ const Navbar = () => {
   const name = user?.name?.trim()?.slice(0, 2)?.toUpperCase();
   return (
     <nav
-      className="relative z-50 bg-black text-[#E0E0EF] px-4 py-3"
+      className="relative z-50 bg-black text-[#E0E0EF] px-4 py-3 shadow-2xl shadow-[#ffffff27]"
       ref={menuRef}
     >
       <Profile isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
 
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link href="/">
-          <img src="/logo.svg" alt="Logo" className="h-10" />
+        <Link href="/" className="bg-white hover:bg-[#ac7268] h-10 border rounded-md hover:border-[#ac7268] ">
+          <img src="/logo-_2_-_1_.svg" alt="Logo" className="h-[100%] rounded-md" />
         </Link>
 
         {/* Hamburger */}
@@ -81,12 +81,12 @@ const Navbar = () => {
             user={user}
             setLoginModal={setIsModelOpen}
           />
-          <NavLink
+          {/* <NavLink
             href="/passion"
             label="Passion Discovery"
             user={user}
             setLoginModal={setIsModelOpen}
-          />
+          /> */}
           <NavLink
             href="/chats"
             label="Community Chat"
@@ -147,14 +147,14 @@ const Navbar = () => {
             setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
           />
-          <NavLink
+          {/* <NavLink
             href="/passion"
             label="Passion Discovery"
             mobile
             user={user}
             setLoginModal={setIsModelOpen}
             onClick={() => setMenuOpen(false)}
-          />
+          /> */}
           <NavLink
             href="/chats"
             label="Community Chat"
@@ -224,10 +224,7 @@ const NavLink = ({
       <Link
         href={href}
         onClick={handleNavigation}
-        className={`block px-4 py-2 rounded-2xl text-white text-sm transition duration-200 ${
-          mobile
-            ? "hover:bg-[#44448E]"
-            : "hover:bg-[#6868AC] md:w-auto md:h-10 md:flex md:justify-center md:items-center"
+        className={`block px-4 py-2 rounded-2xl text-white text-sm transition duration-200 ${"hover:bg-[#ac7268] md:w-auto md:h-10 md:flex md:justify-center md:items-center"
         }`}
       >
         {label}
