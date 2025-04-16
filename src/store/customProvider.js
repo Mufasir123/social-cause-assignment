@@ -6,20 +6,23 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 
 const CustomProvider = ({ children }) => {
-  const [persistor, setPersistor] = useState(null);
-
+  // Use this to track client-side hydration
+  const [isClient, setIsClient] = useState(false);
+  
   useEffect(() => {
-    const _persistor = persistStore(store);
-    setPersistor(_persistor);
+    setIsClient(true);
   }, []);
 
-  if (!persistor) return null; // or a loading spinner
-
+  // Only attempt to use PersistGate on the client
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        {children}
-      </PersistGate>
+      {isClient ? (
+        <PersistGate loading={null} persistor={persistStore(store)}>
+          {children}
+        </PersistGate>
+      ) : (
+        children
+      )}
     </Provider>
   );
 };
