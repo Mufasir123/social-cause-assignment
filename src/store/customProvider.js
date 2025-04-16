@@ -1,8 +1,9 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './store'; // import both
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "./store";
 
 const CustomProvider = ({ children }) => {
   const [isClient, setIsClient] = useState(false);
