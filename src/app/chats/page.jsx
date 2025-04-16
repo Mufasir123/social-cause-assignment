@@ -1,10 +1,13 @@
 "use client";
+export const dynamic = "force-dynamic";
+
+
 import ChatBox from "@/components/ChatBox";
 import ChatBoxForChating from "@/components/ChatBoxForChating";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ChatApp = () => {
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null)
 
   const handleGroupClick = (group) => {
     setSelectedGroup(group); // Pass full group info

@@ -84,7 +84,6 @@ const ChatBoxForChating = ({ groupInfo, onBack }) => {
 
   const handleJoinGroup = async () => {
     try {
-      const token = localStorage.getItem("token");
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/group/join/${groupInfo._id}`;
       setLoading(true);
 
