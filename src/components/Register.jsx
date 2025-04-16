@@ -58,7 +58,11 @@ function Register() {
       
       if (res.data.success === true) {
         toast.success(login ? "Login successful" : "User registered successfully")
-        localStorage.setItem("token", res.data.token);
+        const userData = {
+          token: res.data.token,
+          user: res.data.user,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
         dispatch(getUser(res.data.user));
         router.push("/content-library");
       }

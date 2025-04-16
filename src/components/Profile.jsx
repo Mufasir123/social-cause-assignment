@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
-import { getUser } from '@/store/userSlice/userSlice';
+import { clearUser, getUser } from '@/store/userSlice/userSlice';
 
 const Profile = ({isOpen, onClose}) => {
   const user = useSelector((state) => state.user?.user);
@@ -18,6 +18,7 @@ const Profile = ({isOpen, onClose}) => {
       const res = await axios.post('/api/logout')
       if (res.status === 200) {
         toast.success("Logout successful");
+        dispatch(clearUser())
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         dispatch(getUser(null))

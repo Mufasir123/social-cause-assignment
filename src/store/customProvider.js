@@ -2,27 +2,22 @@
 
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
+import store from "./store";
+import { getUser } from "./userSlice/userSlice";
+import { useRouter } from "next/navigation";
 
 const CustomProvider = ({ children }) => {
   const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  return (
-    <Provider store={store}>
-      {isClient ? (
-        <PersistGate loading={null} persistor={persistor}>
-          {children}
-        </PersistGate>
-      ) : (
-        children
-      )}
-    </Provider>
-  );
+  const router = useRouter()
+  useEffect(()=>{
+    setIsClient(true)
+    const savedUser = localStorage.getItem("user")
+    if(savedUser){
+      const userData = JSON.parse(savedUser)
+      store.dispatch(getUser(userData.user))
+    }
+  },[router.asPath])
+  return <Provider store={store}>{isClient ? children : null}</Provider>;
 };
 
 export default CustomProvider;
