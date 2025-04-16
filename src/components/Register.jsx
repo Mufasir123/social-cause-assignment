@@ -57,8 +57,10 @@ function Register() {
       const res = await axios.post(url, data);
 
       if (res.data.success === true) {
-        toast.success(login ? "Login successful" : "User registered successfully");
-        localStorage.setItem("token", res.data.token);
+        toast.success(login ? "Login successful" : "User registered successfully")
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", res.data.token);
+        }
         dispatch(getUser(res.data.user));
         router.push("/content-library");
       }
