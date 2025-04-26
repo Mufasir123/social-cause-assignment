@@ -11,13 +11,18 @@ const ContentTEDTalks = () => {
       try {
         console.log("Fetching TED Talks data...");
         const res = await axios.get("/api/get-content-details");
-        const allContent = res.data.data;
+        const allContent = res.data?.data;
 
-        // Flatten and collect all TED Talks
-        const tedTalksList = allContent.flatMap((item) => item.tedTalks || []);
+        
+    if (!Array.isArray(allContent)) {
+      console.error("Invalid content received:", allContent);
+      return;
+    }
 
-        console.log("All TED Talks:", tedTalksList);
-        setTalks(tedTalksList);
+    // Now safe to flatMap
+    const tedTalksList = allContent.flatMap((item) => item.tedTalks || []);
+    console.log("All TED Talks:", tedTalksList);
+    setTalks(tedTalksList);
       } catch (err) {
         console.error("Error fetching TED Talks:", err);
       }
