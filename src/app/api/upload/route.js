@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import cloudinary from '@/lib/cloudinary'
 import ContentModel from '@/models/contenModel' // Fixed typo in import path
+import dbConnect from '@/lib/db'
 
 // 🛠️ Uploads a file to Cloudinary
 const uploadToCloudinary = async (file) => {
@@ -20,6 +21,7 @@ const uploadToCloudinary = async (file) => {
 }
 
 export async function POST(request) {
+  await dbConnect()
   try {
     const formData = await request.formData()
     

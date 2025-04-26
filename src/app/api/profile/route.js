@@ -1,8 +1,10 @@
 import UserModel from "@/models/userModel";
 import { authenticateUser } from "@/lib/authenticateUser"
 import { NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
 
 export async function GET(request) {
+    await dbConnect()
 
     try {
         const auth = await authenticateUser(request)

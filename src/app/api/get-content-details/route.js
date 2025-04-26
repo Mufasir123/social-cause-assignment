@@ -1,7 +1,9 @@
+import dbConnect from "@/lib/db";
 import ContentModel from "@/models/contenModel";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+    await dbConnect()
     try {
         const data = await ContentModel.find({}).sort({ date: -1 }).limit(10).exec();
         console.log("Fetched data:", data);
