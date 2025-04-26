@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/db";
 import UserModel from "@/models/userModel";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -6,9 +7,10 @@ import { NextResponse } from "next/server";
 
 
 export async function POST(request) {
+    await dbConnect()
     const {email, password} =await request.json();
     try {
-        const user = await UserModel.findOne({ email})
+        const user = await UserModel.findOne({email})
         if(!user){
             return NextResponse.json({message: "User not found/ Register please"},{status:401})
         }

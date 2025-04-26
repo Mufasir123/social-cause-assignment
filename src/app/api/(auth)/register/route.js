@@ -4,10 +4,12 @@ import bcrypt from 'bcryptjs'
 import validator from 'validator'
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import dbConnect from "@/lib/db";
 
 
 
 export async function POST(request) {
+    await dbConnect()
     const { name, email, password, yourPassion } = await request.json();
     
     try {
