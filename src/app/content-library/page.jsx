@@ -10,7 +10,7 @@ import ContentBooks from "@/components/ContentBooks";
 import ContentArticles from "@/components/ContentArticles";
 
 const ContentLibrary = () => {
-  const [activePage, setActivePage] = useState("articles");
+  const [activePage, setActivePage] = useState("videos");
 
   const menuItems = [
     { name: "articles", icon: <MdArticle size={24} />, label: "Articles" },
