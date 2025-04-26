@@ -12,6 +12,8 @@ const ContentTEDTalks = () => {
         console.log("Fetching TED Talks data...");
         const res = await axios.get("/api/get-content-details");
         const allContent = res.data?.data;
+        console.log("Content is coming...", allContent);
+        
 
         
     if (!Array.isArray(allContent)) {
