@@ -53,74 +53,67 @@ const ContentVideos = () => {
               </div>
             ))
           : videos.map((data, index) => (
+            <div
+            key={index}
+            className="relative rounded-xl shadow-[#2b1f32a7] shadow-md w-full max-w-[300px] h-[480px] sm:max-w-[340px] sm:h-[500px] lg:max-w-[360px] lg:h-[540px] overflow-hidden cursor-pointer"
+          >
+            {/* Video Player */}
+            {data.url ? (
+              <video
+                src={data.url}
+                controls
+                controlsList="nodownload"
+                className="w-full h-full object-cover"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            ) : data.videoUrl ? (
+              <iframe
+                src={data.videoUrl}
+                frameBorder="0"
+                className="w-full h-full object-cover"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                onContextMenu={(e) => e.preventDefault()}
+              />
+            ) : (
+              <p>No video available</p>
+            )}
+          
+            {/* Bottom Overlay */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4">
+              <h3 className="text-white text-lg font-semibold mb-1 tracking-wide">
+                {data.title || "Untitled"}
+              </h3>
+          
+              {/* Scrollable Description */}
               <div
-                key={index}
-                className="relative bg-black rounded-xl  shadow-slate-600 shadow-md w-[300px] h-[540px] lg:w-[360px] lg:h-[540px] overflow-hidden "
+                className={`text-gray-300 text-sm overflow-y-auto pr-1 transition-all duration-300 ${
+                  expandedIndex === index ? "max-h-[150px]" : "max-h-[60px]"
+                } custom-scrollbar`}
               >
-                {/* Video Player */}
-                {data.url ? (
-                  <video
-                    src={data.url}
-                    controls
-                    controlsList="nodownload"
-                    className="w-full h-full object-cover"
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                ) : data.videoUrl ? (
-                  <iframe
-                    src={data.videoUrl}
-                    frameBorder="0"
-                    className="w-full h-full object-cover"
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                ) : (
-                  <p>No video available</p>
-                )}
-
-                {/* Bottom Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-4">
-                  <h3 className="text-white text-lg font-semibold mb-1">
-                    {data.title || "Untitled"}
-                  </h3>
-
-                  {/* Scrollable Description */}
-                  <div
-                    className={`text-gray-300 text-sm overflow-y-auto pr-1 transition-all duration-300 ${
-                      expandedIndex === index ? "max-h-[150px]" : "max-h-[60px]"
-                    } custom-scrollbar`}
-                  >
-                    {data.description}
-                  </div>
-
-                  {/* Show More Button */}
-                  {data.description?.length > 150 && (
-                    <button
-                      onClick={() =>
-                        setExpandedIndex(expandedIndex === index ? null : index)
-                      }
-                      className="text-blue-400 text-xs mt-1 hover:underline"
-                    >
-                      {expandedIndex === index ? "Show Less" : "Show More"}
-                    </button>
-                  )}
-
-                  <p className="text-gray-400 text-xs mt-1">
-                    Credits: {data.credit}
-                  </p>
-                  {/* <a
-                href={data.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 text-xs mt-1 inline-block"
-              >
-                Watch data
-              </a> */}
-                </div>
+                {data.description}
               </div>
+          
+              {/* Show More Button */}
+              {data.description?.length > 150 && (
+                <button
+                  onClick={() =>
+                    setExpandedIndex(expandedIndex === index ? null : index)
+                  }
+                  className="text-blue-400 text-xs mt-1 hover:underline"
+                >
+                  {expandedIndex === index ? "Show Less" : "Show More"}
+                </button>
+              )}
+          
+              <p className="text-gray-400 text-xs mt-1">
+                Credits: {data.credit}
+              </p>
+            </div>
+          </div>
+          
             ))}
       </div>
     </div>

@@ -2,13 +2,13 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { FaArrowRight } from "react-icons/fa6";
 
 const ContentArticle = () => {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const allContent = useSelector((state) => state.content.content);
-
 
   console.log("articles data from Redux:", allContent);
 
@@ -18,7 +18,6 @@ const ContentArticle = () => {
   ];
   console.log("categories:", categories);
   console.log("selectedCategory:", selectedCategory);
-
 
   // Filter content by selected category
   const filteredContent =
@@ -68,16 +67,16 @@ const ContentArticle = () => {
           searchedarticles.map((article, index) => (
             <div
               key={index}
-              className="bg-black border border-[#f4eeee48] p-0.5 shadow-[#5d4941da] rounded-lg shadow-lg"
+              className="bg-gray-100 border border-[#f4eeee48] p-0.5 shadow-[#4d34554d] rounded-lg shadow-lg"
             >
               {article.url && (
-      <img
-        src={article.url}
-        alt=""
-        className="w-full h-80 rounded-t-lg shadow-xl shadow-[#9464647e] hover:scale-90 transition-all duration-300 lazyload"
-      />
-    )}
-              <h3 className="ml-3 text-md font-semibold text-white mb-3 mt-3">
+                <img
+                  src={article.url}
+                  alt=""
+                  className="w-full h-80 rounded-t-lg hover:scale-90 transition-all duration-300 lazyload"
+                />
+              )}
+              <h3 className="ml-3 text-lg font-semibold text-black mb-3 mt-3 tracking-wide font-sans">
                 {article.title || "Untitled"}
               </h3>
               <p className=" ml-3 mr-3 mb-3">
@@ -86,7 +85,7 @@ const ContentArticle = () => {
               </p>
 
               <div
-                className={`text-gray-300 text-sm overflow-y-auto pr-1 transition-all duration-300 ml-3 mr-3 mt-3 ${
+                className={`text-[#494D48] text-sm  overflow-y-auto pr-1 transition-all duration-300 ml-3 mr-3 mt-3 ${
                   expandedIndex === index ? "max-h-[150px]" : "max-h-[60px]"
                 } custom-scrollbar`}
               >
@@ -99,22 +98,20 @@ const ContentArticle = () => {
                   onClick={() =>
                     setExpandedIndex(expandedIndex === index ? null : index)
                   }
-                  className="text-blue-400 text-xs mt-1 hover:underline ml-3 mb-3"
+                  className="text-blue-400 text-xs mt-1 hover:underline ml-3 mb-3 cursor-pointer"
                 >
                   {expandedIndex === index ? "Show Less..." : "Show More..."}
                 </button>
               )}
               <br />
               {/* {article.articleUrl && ( */}
-                <Link
-                  // href={article.articleUrl}
-                  href={`content-library/article/${index}`}
-                  // target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-400  inline-block cursor-pointer ml-3 mb-3 hover:scale-110 transition-all duration-300"
-                >
-                  Know More
-                </Link>
+              <Link
+                href={`content-library/article/${index}`}
+                rel="noopener noreferrer">
+                <button className=" bg-[#c6da2e] p-2 rounded-lg mb-3 ml-3 text-xs font-semibold tracking-widest cursor-pointer flex items-center gap-1 font-sans">
+                Learn More <FaArrowRight/>
+                </button>
+              </Link>
               {/* )} */}
             </div>
           ))
